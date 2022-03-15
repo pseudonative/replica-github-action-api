@@ -2,9 +2,9 @@ name: CI/CD
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    brances: [ master ]
+    brances: [ main ]
 
 jobs:
   deploy:
@@ -55,7 +55,7 @@ jobs:
         fi
         EOF
         ./tf_key.sh
-        
+
 
 
      
