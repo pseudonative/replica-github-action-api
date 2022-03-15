@@ -56,6 +56,7 @@ jobs:
         EOF
         ./tf_key.sh
         cat bucket_*
+        
 
 
         # DIR=$(aws s3 ls s3://jeremy-code-deploy-dev-useast1/api/)
