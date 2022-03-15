@@ -57,6 +57,3 @@ jobs:
         ./tf_key.sh
         cat bucket_*
 
-
-
-     
