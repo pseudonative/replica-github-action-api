@@ -36,7 +36,7 @@ jobs:
         chmod +x tf_key.sh
         cat <<\EOF >> tf_key.sh
         #!/bin/bash
-        DIR=$(aws s3 ls s3://jeremy-code-deploy-dev-useast1/api)
+        DIR=$(aws s3 ls s3://jeremy-code-deploy-dev-useast1/api/)
         export VERSION=$(head -n 1 ./RELEASE_NOTES.md)
         if [[ -d $DIR$VERSION || -L $DIR$VERSION ]]; then
           echo "It Exists"
