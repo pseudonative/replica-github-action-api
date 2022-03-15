@@ -29,7 +29,7 @@ jobs:
     
     - name: cp to s3 
       run: |
-        export VERSION=$(head -n 1 ./RELEASE_NOTES.md)
+        #export VERSION=$(head -n 1 ./RELEASE_NOTES.md)
         touch bucket_key.md
         touch bucket_version.md
         touch tf_key.sh
