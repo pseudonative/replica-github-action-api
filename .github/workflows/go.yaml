@@ -37,20 +37,20 @@ jobs:
         cat <<\EOF >> tf_key.sh
         #!/bin/bash
         VERSION=$(head -n 1 ./RELEASE_NOTES.md)
-        DIR=$(aws s3 ls s3://jeremy-code-deploy-dev-useast1/api/${VERSION} | awk '{print $2}')
-        if [ -z "$DIR" ]; then
+        DIR=$(aws s3 ls s3://jeremy-code-deploy-dev-useast1/api/)
+        if [ -z "$DIR$VERSION" ]; then
           echo "It Doesn't exist"
           aws s3 cp api.zip s3://jeremy-code-deploy-dev-useast1/api/$VERSION/api.zip
-          echo "$DIR" | cat - bucket_version.md >> temp && mv -f temp bucket_version.md
+          echo "$DIR$VERSION" | cat - bucket_version.md >> temp && mv -f temp bucket_version.md
           head -n 1 bucket_version.md | grep -Eio $VERSION > bucket_key.md
         else
           echo "It Exists"
           i=1
-          while [ -e "$DIR-$1" ]; do 
+          while [ -e "$DIR$VERSION-$1" ]; do 
            let i++;
           done
           aws s3 cp api.zip s3://jeremy-code-deploy-dev-useast1/api/$VERSION-$i/api.zip
-          echo "$DIR-$i" | cat - bucket_version.md >> temp && mv -f temp bucket_version.md
+          echo "$DIR$VERSION-$i" | cat - bucket_version.md >> temp && mv -f temp bucket_version.md
           head -n 1 bucket_version.md | grep -Eio $VERSION-$i > bucket_key.md
         fi
         EOF
