@@ -54,7 +54,6 @@ jobs:
           head -n 1 bucket_version.md | grep -Eio $VERSION-$i > bucket_key.md
         fi
         EOF
-        ./tf_key.sh
         cat tf_key.sh
 
 
