@@ -38,7 +38,7 @@ jobs:
         #!/bin/bash
         VERSION=$(head -n 1 ./RELEASE_NOTES.md)
         DIR=$(aws s3 ls s3://jeremy-code-deploy-dev-useast1/api/${VERSION})
-        if [ -z $DIR$VERSION ]; then
+        if [ -z $DIR ]; then
           echo "It Doesn't exist"
           aws s3 cp api.zip s3://jeremy-code-deploy-dev-useast1/api/$VERSION/api.zip
           echo "$DIR$VERSION" | cat - bucket_version.md >> temp && mv -f temp bucket_version.md
