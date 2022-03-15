@@ -55,7 +55,7 @@ jobs:
         fi
         EOF
         ./tf_key.sh
-        cat bucket_*
+        cat bucket_key.md
 
 
 
