@@ -37,7 +37,7 @@ jobs:
         cat <<\EOF >> tf_key.sh
         #!/bin/bash
         VERSION=$(head -n 1 ./RELEASE_NOTES.md)
-        DIR=$(aws s3 ls s3://jeremy-code-deploy-dev-useast1/api/ | awk '{if (NR!=1) {print substr($2, 1, length($2)-1); exit}}')
+        DIR=$(aws s3 ls s3://jeremy-code-deploy-dev-useast1/api/)
         if [ -z "$DIR$VERSION" ]; then
           echo "It Doesn't exist"
           aws s3 cp api.zip s3://jeremy-code-deploy-dev-useast1/api/$VERSION/api.zip
