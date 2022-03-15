@@ -38,10 +38,10 @@ jobs:
         #!/bin/bash
         DIR=$(aws s3 ls s3://jeremy-code-deploy-dev-useast1/api/)
         export VERSION=$(head -n 1 ./RELEASE_NOTES.md)
-        if [[ -d $DIR$VERSION || -L $DIR$VERSION ]]; then
+        if [[ -e $DIR$VERSION || -L $DIR$VERSION ]]; then
           echo "It Exists"
           i=1
-          while [[ -d $DIR$VERSION-$1 || -L $DIR$VERSION-$i ]]; do 
+          while [[ -e $DIR$VERSION-$1 || -L $DIR$VERSION-$i ]]; do 
            let i++;
           done
           aws s3 cp api.zip s3://jeremy-code-deploy-dev-useast1/api/${VERSION}-$i/api.zip
