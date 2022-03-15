@@ -21,7 +21,7 @@ jobs:
         zip api.zip bookings hello-world
 
     - name: config aws
-      uses: aws-actions/configure-aws-credential@v1
+      uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ secrets.GHUB_ACTIONS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.GHUB_ACTIONS_ACCESS_KEY }}
