@@ -50,7 +50,7 @@ jobs:
         cat bucket_key.md
         EOF
         ./tf_key.sh
-        echo "this is the current state of bucket_key.md"
+        echo "this is the current state of bucket_key.md version"
         cat bucket_key.md
     - name: Archive production artifacts
       uses: actions/upload-artifact@v3
