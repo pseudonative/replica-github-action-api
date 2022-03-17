@@ -52,6 +52,15 @@ jobs:
         echo "this is the current state of bucket_key.md"
         cat bucket_key.md
 
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+    - name: see if file is available 
+      run: |
+        ls -alt 
+        ls -alt | grep -Ei bucket 
+        
 
 
         
