@@ -40,12 +40,13 @@ jobs:
         COUNT=$(aws s3 ls --recursive s3://jeremy-code-deploy-dev-useast1/api/$VERSION | wc -l | awk '{print $1}')
         if [ -z "$EXISTS" ]; then
         aws s3 cp api.zip s3://jeremy-code-deploy-dev-useast1/api/$VERSION/api.zip
+        echo $VERSION > bucket_key.md
         else 
           if [ "$COUNT" -ge "1" ]; then 
           aws s3 cp api.zip s3://jeremy-code-deploy-dev-useast1/api/$VERSION-${COUNT}/api.zip
+          echo $VERSION-$COUNT > bucket_key.md
           fi
         fi
-        echo $VERSION-$COUNT > bucket_key.md
         cat bucket_key.md
         EOF
         ./tf_key.sh
