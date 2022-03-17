@@ -31,7 +31,6 @@ jobs:
       run: |
         export VERSION=$(head -n 1 ./RELEASE_NOTES.md)
         touch bucket_key.md
-        touch bucket_version.md
         touch tf_key.sh
         chmod +x tf_key.sh
         cat <<\EOF >> tf_key.sh
@@ -49,6 +48,7 @@ jobs:
         echo $VERSION-$COUNT > bucket_key.md
         cat bucket_key.md
         EOF
+        ./tf_key.sh
         echo "this is the current state of bucket_key.md"
         cat bucket_key.md
 
