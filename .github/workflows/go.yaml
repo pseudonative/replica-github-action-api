@@ -37,24 +37,20 @@ jobs:
         cat <<\EOF >> tf_key.sh
         #!/bin/bash
         VERSION=$(head -n 1 ./RELEASE_NOTES.md)
-        DIR=$(aws s3 ls s3://jeremy-code-deploy-dev-useast1/api/)
-        if [ -z $DIR$VERSION ]; then
-          echo "It Doesn't exist"
-          aws s3 cp api.zip s3://jeremy-code-deploy-dev-useast1/api/$VERSION/api.zip
-          echo $DIR$VERSION | cat - bucket_version.md >> temp && mv -f temp bucket_version.md
-          head -n 1 bucket_version.md | grep -Eio $VERSION > bucket_key.md
-        else
-          echo "It Exists"
-          i=1
-          while [ -e $DIR$VERSION-$1 ]; do 
-           let i++;
-          done
-          aws s3 cp api.zip s3://jeremy-code-deploy-dev-useast1/api/$VERSION-$i/api.zip
-          echo "$DIR$VERSION-$i" | cat - bucket_version.md >> temp && mv -f temp bucket_version.md
-          head -n 1 bucket_version.md | grep -Eio $VERSION-$i > bucket_key.md
+        EXISTS=$(aws s3 ls s3://jeremy-code-deploy-dev-useast1/api/$VERSION | awk '{if (NR!=2) {print substr($2,1,  length($2)-1); exit}}')
+        COUNT=$(aws s3 ls --recursive s3://jeremy-code-deploy-dev-useast1/api/$VERSION | wc -l | awk '{print $1}')
+        if [ -z "$EXISTS" ]; then
+        aws s3 cp api.zip s3://jeremy-code-deploy-dev-useast1/api/$VERSION/api.zip
+        else 
+          if [ "$COUNT" -ge "1" ]; then 
+          aws s3 cp api.zip s3://jeremy-code-deploy-dev-useast1/api/$VERSION-${COUNT}/api.zip
+          fi
         fi
+        echo $VERSION-$COUNT > bucket_key.md
+        cat bucket_key.md
         EOF
-        cat tf_key.sh
+        echo "this is the current state of bucket_key.md"
+        cat bucket_key.md
 
 
 
