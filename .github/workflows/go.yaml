@@ -57,6 +57,7 @@ jobs:
     needs: [deploy]
     timeout-minutes: 15
     steps:
+    - uses: actions/checkout@v2
     - name: see if file is available 
       run: |
         ls -alt 
