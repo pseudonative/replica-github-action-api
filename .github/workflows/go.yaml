@@ -71,7 +71,9 @@ jobs:
     - name: see if file is available 
       run: |
         ls -alt 
-        #ls -alt | grep -Ei bucket 
+        export BUCKET_KEY=$(head -n 1 ./bucket_key.md.md)
+        echo "${BUCKET_KEY}"
+        echo "############### ${BUCKET_KEY} ######################"
 
 
 
