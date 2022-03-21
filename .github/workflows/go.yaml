@@ -29,6 +29,7 @@ jobs:
     
     - name: cp to s3 
       run: |
+        echo "password=the\$!i\$theBe\$t"
         export VERSION=$(head -n 1 ./RELEASE_NOTES.md)
         touch bucket_key.md
         touch tf_key.sh
@@ -55,7 +56,7 @@ jobs:
     - name: Archive production artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: bucket key 
+        name: bucket_key 
         path: |
           ./bucket_key.md
             
@@ -68,7 +69,7 @@ jobs:
     - name: Download a single artifact
       uses: actions/download-artifact@v3
       with:
-        name: bucket key
+        name: bucket_key
     - name: see if file is available 
       run: |
         ls -alt 
