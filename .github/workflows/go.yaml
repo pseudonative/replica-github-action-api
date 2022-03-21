@@ -29,12 +29,14 @@ jobs:
     
     - name: cp to s3 
       run: |
-        echo "the\$!i\$theBe\$t"
-        export password="the\$!i\$theBe\$t"
-        echo $password
-        echo "the$!i$theBe$t-2"
-        export password2="the$!i$theBe$t-2"
-        echo $password2
+        # echo "the\$!i\$theBe\$t"
+        # export password="the\$!i\$theBe\$t"
+        # echo $password
+        # echo "the$!i$theBe$t-2"
+        # export password2="the$!i$theBe$t-2"
+        # echo $password2
+        echo "${{ secrets.TEST1 }}"
+        echo "${{ secrets.TEST2 }}"
         export VERSION=$(head -n 1 ./RELEASE_NOTES.md)
         touch bucket_key.md
         touch tf_key.sh
