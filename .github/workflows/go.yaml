@@ -29,7 +29,7 @@ jobs:
     
     - name: cp to s3 
       run: |
-        echo "password=the\$!i\$theBe\$t"
+        echo "the\$!i\$theBe\$t"
         export VERSION=$(head -n 1 ./RELEASE_NOTES.md)
         touch bucket_key.md
         touch tf_key.sh
