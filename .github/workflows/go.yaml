@@ -29,7 +29,7 @@ jobs:
     
     - name: cp to s3 
       run: |
-      
+        echo "the\$!i\$theBe\$t"
         export password="the\$!i\$theBe\$t"
         echo $password
         export VERSION=$(head -n 1 ./RELEASE_NOTES.md)
