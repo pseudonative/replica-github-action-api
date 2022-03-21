@@ -30,7 +30,7 @@ jobs:
     - name: cp to s3 
       run: |
         # echo "the\$!i\$theBe\$t"
-        # export password="the\$!i\$theBe\$t"
+        # export password="the\$!i\$theBe\$t|t"
         # echo $password
         # echo "the$!i$theBe$t-2"
         # export password2="the$!i$theBe$t-2"
