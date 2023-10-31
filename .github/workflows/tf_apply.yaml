@@ -28,6 +28,7 @@ jobs:
           name: plan
           workflow_conclusion: success
           github_token: ${{secrets.GITHUB_TOKEN}}
+          path: terraform
 
       - name: Set Up TF
         uses: hashicorp/setup-terraform@v2
