@@ -37,6 +37,8 @@ jobs:
             sleep 5
             pwd
             sleep 5
+            cd terraform
+            la -alt
             
     #   - name: Set Up TF
     #     uses: hashicorp/setup-terraform@v2
