@@ -13,7 +13,7 @@ resource "aws_instance" "myec2vm" {
   tags = {
     "Name" = "${var.Name}_cicd_${count.index}"
     Service = "CICD"
-    Environment = "GithubActions"
+    Environment = "GithubActionsWorkflow"
   }
   provider = aws.us-east-1
 }
