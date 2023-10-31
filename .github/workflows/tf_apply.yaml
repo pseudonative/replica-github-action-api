@@ -37,7 +37,6 @@ jobs:
             pwd
             sleep 5
             
-
     #   - name: Set Up TF
     #     uses: hashicorp/setup-terraform@v2
     #     with:
