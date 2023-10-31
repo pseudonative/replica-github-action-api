@@ -39,21 +39,4 @@ jobs:
         name: plan
         path: terraform/plan.tfout
     
-    - name: Display Terraform Plan
-      run: |
-           cd terraform
-           plan_contents=$(cat plan.tfout)
-           echo "::set-output name=plan_contents::$plan_contents"
-
-    - name: Comment on Pull Request
-      uses: actions/github-script@v6
-      with:
-        script: |
-          github.issues.createComment({
-            issue_number: context.issue.number,
-             owner: context.repo.owner,
-             repo: context.repo.repo,
-             body: "Terraform Plan Contents:\n\`\`\`hcl\n${{ steps.displayTerraformPlan.outputs.plan_contents }}\n\`\`\`",
-           });
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+   
