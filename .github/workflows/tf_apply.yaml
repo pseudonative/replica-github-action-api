@@ -24,7 +24,7 @@ jobs:
       - name: Download Plan Artifact
         uses: dawidd6/action-download-artifact@v2
         with:
-          workflow: Terraform Plan
+          workflow: tf_play.yaml
           name: plan
           workflow_conclusion: success
           github_token: ${{secrets.GITHUB_TOKEN}}
