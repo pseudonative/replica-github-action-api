@@ -1,0 +1,43 @@
+name: Terraform Plan
+
+on:
+    issue_comment:
+      types: [created]
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    if: github.event.issue.pull_request && contains(github.event.comment.body, '/deploy')
+    steps:
+
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.GHUB_ACTIONS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.GHUB_ACTIONS_ACCESS_KEY }}
+        aws-region: us-east-1
+
+    - name: Set Up TF
+      uses: hashicorp/setup-terraform@v2
+      with: 
+        terraform_version: 1.4.5
+
+    - name: Terraform init
+      run: |
+        cd terraform/
+        terraform init
+        terraform fmt -check
+        terraform validate -no-color
+
+    - name: Terraform Plan
+      run: terraform plan -out=tfplan
+
+    - name: Save Plan Output
+      id: plan
+      run: echo "::set-output name=plan::$(cat tfplan)"
+    
+    - name: Display Plan Summary
+      run: cat tfplan        
