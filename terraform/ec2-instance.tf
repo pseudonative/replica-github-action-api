@@ -12,8 +12,8 @@ resource "aws_instance" "myec2vm" {
   count = 1
   tags = {
     "Name" = "${var.Name}_test_${count.index}"
-    Service = "Digger Terragrunt"
-    Environment = "Prod"
+    Service = "CICD"
+    Environment = "GithubActions"
   }
   provider = aws.us-east-1
 }
