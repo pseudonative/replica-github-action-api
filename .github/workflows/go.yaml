@@ -1,12 +1,14 @@
 name: CI/CD
 
 on:
-  pull_request:
-    branches: [ main ]
+  workflow_run:
+    workflows: [TESTING]
+    types: [completed]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     timeout-minutes: 15
     steps:
     - uses: actions/checkout@v2
@@ -17,7 +19,6 @@ jobs:
         cp -R * ../..
         cd ../..
         zip api.zip bookings hello-world
-        echo "testing this"
 
     - name: config aws
       uses: aws-actions/configure-aws-credentials@v1
