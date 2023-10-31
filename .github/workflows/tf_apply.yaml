@@ -24,18 +24,27 @@ jobs:
       - name: Download Plan Artifact
         uses: dawidd6/action-download-artifact@v2
         with:
-          workflow: tf_plan.yaml
+          workflow: Terraform Plan
           name: plan
           workflow_conclusion: success
           github_token: ${{secrets.GITHUB_TOKEN}}
+          path: terraform
 
-      - name: Set Up TF
-        uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: 1.5.0
-
-      - name: Terraform Apply
+      - name: Wheres our Plan outputted to
         run: |
-          cd terraform
-          terraform init
-          terraform apply --auto-approve "plan.tfout"
+            ls -alt
+            sleep 5
+            pwd
+            sleep 5
+            
+
+    #   - name: Set Up TF
+    #     uses: hashicorp/setup-terraform@v2
+    #     with:
+    #       terraform_version: 1.5.0
+
+    #   - name: Terraform Apply
+    #     run: |
+    #       cd terraform
+    #       terraform init
+    #       terraform apply --auto-approve "plan.tfout"
