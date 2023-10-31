@@ -1,0 +1,38 @@
+name: Terraform Apply
+
+on:
+  workflow_run:
+    workflows: ["Terraform Plan"]
+    types:
+      - completed
+
+jobs:
+  terraform_apply:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.GHUB_ACTIONS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.GHUB_ACTIONS_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Download Plan Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: plan
+          path: terraform
+
+      - name: Set Up TF
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.0
+
+      - name: Terraform Apply
+        run: |
+          cd terraform
+          terraform init
+          terraform apply --auto-approve "plan.tfout"
