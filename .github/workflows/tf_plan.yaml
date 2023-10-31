@@ -33,11 +33,17 @@ jobs:
         terraform validate -no-color
 
     - name: Terraform Plan
-      run: terraform plan -out=tfplan
+      run: |
+        cd terraform/
+        terraform plan -out=tfplan
 
     - name: Save Plan Output
       id: plan
-      run: echo "::set-output name=plan::$(cat tfplan)"
+      run: |
+        cd terraform/
+        echo "::set-output name=plan::$(cat tfplan)"
     
     - name: Display Plan Summary
-      run: cat tfplan        
+      run: |
+        cd terraform/
+        cat tfplan        
