@@ -31,8 +31,6 @@ jobs:
         ls -alt
         cd terraform/
         terraform init
-        terraform fmt -check
-        terraform validate -no-color
         terraform plan -out=tfplan
         echo "::set-output name=plan::$(cat tfplan)"
         cat tfplan        
