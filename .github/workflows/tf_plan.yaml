@@ -1,16 +1,14 @@
 name: Terraform Plan
 
 on:
-    repository_dispatch:
-        types: [trigger-terraform-plan]
+    issue_comment:
+      types: [created]
 
 jobs:
   terraform:
     runs-on: ubuntu-latest
+    if: github.event.issue.pull_request && contains(github.event.comment.body, '/deploy')
     steps:
-    - name: Wait for Trigger Comment
-      if: github.event_name == 'repository_dispatch'
-      run: echo "Repository Dispatch event received. Continue with Terraform Plan."
 
     - name: Checkout Repository
       uses: actions/checkout@v2
@@ -22,8 +20,17 @@ jobs:
         aws-secret-access-key: ${{ secrets.GHUB_ACTIONS_ACCESS_KEY }}
         aws-region: us-east-1
 
-    - name: Initialize Terraform
-      run: terraform init
+    - name: Set Up TF
+      uses: hashicorp/setup-terraform@v2
+      with: 
+        terraform_version: 1.4.5
+
+    - name: Terraform init
+      run: |
+        cd terraform/
+        terraform init
+        terraform fmt -check
+        terraform validate -no-color
 
     - name: Terraform Plan
       run: terraform plan -out=tfplan
