@@ -33,6 +33,10 @@ jobs:
         ls -alt
         cd terraform/
         terraform init
-        terraform plan -out=tfplan
-        echo "::set-output name=plan::$(cat tfplan)"
-        cat tfplan        
+        terraform plan -out=plan.tfout
+
+    - name: Archive Plan File
+      uses: actions/upload-artifact@v2
+      with:
+        name: plan
+        path: terraform/plan.tfout
