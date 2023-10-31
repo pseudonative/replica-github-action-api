@@ -3,7 +3,10 @@ name: Terraform Plan
 on:
     issue_comment:
       types: [created]
-
+      
+    pull_request:
+     branches: [ main ]
+     
 jobs:
   terraform:
     runs-on: ubuntu-latest
