@@ -39,7 +39,7 @@ jobs:
             pwd
             sleep 5
             cd terraform
-            la -alt
+            ls -alt
 
             
     #   - name: Set Up TF
