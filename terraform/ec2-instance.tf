@@ -11,7 +11,7 @@ resource "aws_instance" "myec2vm" {
   ]
   count = 2
   tags = {
-    "Name" = "${var.Name}_ci_cd_${count.index}"
+    "Name" = "${var.Name}_cicd_${count.index}"
     Service = "CI/CD"
     Environment = "GithubActionsWorkflow"
   }
