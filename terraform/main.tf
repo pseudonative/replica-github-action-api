@@ -2,7 +2,7 @@ terraform {
   required_version = ">= 1.5.0"
   backend "s3" {
     bucket         = "shoshone-tfstate"
-    key            = "shoshonekey/digger_prod_1"
+    key            = "shoshonekey/cicd"
     region         = "us-east-1"
     kms_key_id     = "arn:aws:kms:us-east-1:520291287938:key/4fc9e509-04c4-4881-89e7-46fb49790093"
     dynamodb_table = "shoshone-state-lock"
