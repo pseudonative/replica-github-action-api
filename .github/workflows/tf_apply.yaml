@@ -40,15 +40,16 @@ jobs:
             sleep 5
             cd terraform
             ls -alt
-
+            head -n1 plan.tfout
             
-    #   - name: Set Up TF
-    #     uses: hashicorp/setup-terraform@v2
-    #     with:
-    #       terraform_version: 1.5.0
+      - name: Set Up TF
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.0
 
-    #   - name: Terraform Apply
-    #     run: |
-    #       cd terraform
-    #       terraform init
-    #       terraform apply --auto-approve "plan.tfout"
+      - name: Terraform Apply
+        run: |
+          cd terraform
+          ls | grep -Ei plan
+          terraform init
+          terraform apply -auto-approve plan.tfout
