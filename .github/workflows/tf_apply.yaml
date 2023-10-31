@@ -25,6 +25,7 @@ jobs:
         uses: dawidd6/action-download-artifact@v2
         with:
           workflow: tf_plan.yaml
+          name: plan
           workflow_conclusion: success
           github_token: ${{secrets.GITHUB_TOKEN}}
 
