@@ -19,7 +19,6 @@ jobs:
         cp -R * ../..
         cd ../..
         zip api.zip bookings hello-world
-        echo "testing this"
 
     - name: config aws
       uses: aws-actions/configure-aws-credentials@v1
