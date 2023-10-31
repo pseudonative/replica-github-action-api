@@ -27,6 +27,8 @@ jobs:
 
     - name: Terraform init
       run: |
+        pwd
+        ls -alt
         cd terraform/
         terraform init
         terraform fmt -check
@@ -34,6 +36,7 @@ jobs:
 
     - name: Terraform Plan
       run: |
+        pwd
         cd terraform/
         terraform plan -out=tfplan
 
