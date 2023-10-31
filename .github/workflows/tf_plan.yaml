@@ -28,6 +28,8 @@ jobs:
     - name: Terraform Plan
       run: |
         pwd
+        echo "Terraform Plan"
+        sleep 4
         ls -alt
         cd terraform/
         terraform init
