@@ -27,10 +27,9 @@ jobs:
 
     - name: Terraform Plan
       run: |
-        pwd
+        sleep 3
         echo "Terraform Plan"
         sleep 4
-        ls -alt
         cd terraform/
         terraform init
         terraform plan -out=plan.tfout
