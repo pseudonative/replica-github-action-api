@@ -3,6 +3,7 @@ name: TESTING
 on:
     pull_request:
       branches: [ main ]
+      types: [ closed, opened, synchronize, reopened ]
 
 jobs:
   test:

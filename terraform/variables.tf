@@ -35,5 +35,5 @@ variable "instance_type_map" {
 variable "Name" {
   description = "name value"
   type = string
-  default = "JeremyCI/CD"
+  default = "Jeremy_CI/CD"
 }
