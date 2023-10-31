@@ -32,6 +32,7 @@ jobs:
 
       - name: Wheres our Plan outputted to
         run: |
+            pwd
             ls -alt
             sleep 5
             pwd
