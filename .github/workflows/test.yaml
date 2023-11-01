@@ -1,11 +1,17 @@
 name: TESTING
 
+# on:
+#     pull_request:
+#       branches: [ main ]
+#       types: [ opened, synchronize]
+#       paths:
+#         - 'terraform/**'
+
 on:
-    pull_request:
-      branches: [ main ]
-      types: [ opened, synchronize]
-      paths:
-        - 'terraform/**'
+  push:
+    branches:
+      - '*'
+      - '!main'
 
 jobs:
   test:
