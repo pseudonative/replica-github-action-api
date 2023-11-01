@@ -12,6 +12,8 @@ jobs:
     timeout-minutes: 15
     steps:
     - uses: actions/checkout@v2
+      with:
+        ref: refs/pull/${{ github.event.pull_request.number }}/merge
     - name: simulated build
       run: |
         export VERSION=$(head -n 1 ./RELEASE_NOTES.md)
@@ -74,6 +76,8 @@ jobs:
     timeout-minutes: 15
     steps:
     - uses: actions/checkout@v2
+      with:
+        ref: refs/pull/${{ github.event.pull_request.number }}/merge
     - name: Download a single artifact
       uses: actions/download-artifact@v3
       with:

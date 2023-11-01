@@ -2,7 +2,7 @@ name: TESTING
 
 on:
     pull_request:
-      branches: [ main, feature-branch ]
+      branches: [ main ]
       types: [ closed, opened, synchronize, reopened ]
 
 jobs:
@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
+        with:
+          ref: refs/pull/${{ github.event.pull_request.number }}/merge
 
       - name: config aws
         uses: aws-actions/configure-aws-credentials@v1
