@@ -31,16 +31,24 @@ jobs:
         sleep 4
         cd terraform/
         terraform init
-        PLAN=$(terraform plan -out=plan.tfout)
-        echo "::set-output name=plan_output::$PLAN"
+        terraform plan -out=plan.tfout
+        
+    - name: Plan for display
+      id: tf_plan
+      run: |
+        cd terraform/
+        terraform init
+        PLAN_OUTPUT=$(terraform plan)
+        echo "::set-output name=plan_output::$PLAN_OUTPUT"
 
     - name: Comment Terraform Plan
       run: |
-        PR_COMMENT_URL=$(echo ${{ github.event.issue.comments_url }})
-        COMMENT_BODY="#### Terraform Plan:\n\`\`\`\n${{ steps.tf_plan.outputs.plan_output }}\n\`\`\`"
-        curl -s -S -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-             -H "Content-Type: application/json" \
-             -X POST --data "{\"body\":\"$COMMENT_BODY\"}" $PR_COMMENT_URL
+          PR_COMMENT_URL=$(jq -r .pull_request.comments_url "$GITHUB_EVENT_PATH")
+          COMMENT_BODY="#### Terraform Plan:\n\`\`\`\n${{ steps.tf_plan.outputs.plan_output }}\n\`\`\`"
+          curl -s -S -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+               -H "Content-Type: application/json" \
+               -X POST --data "{\"body\":\"$COMMENT_BODY\"}" $PR_COMMENT_URL
+      
 
 
     - name: Archive Plan File
