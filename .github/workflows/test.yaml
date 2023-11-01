@@ -2,7 +2,7 @@ name: TESTING
 
 on:
     pull_request:
-      branches: [ feature-branch ]
+      branches: [ main, feature-branch ]
       types: [ closed, opened, synchronize, reopened ]
 
 jobs:
