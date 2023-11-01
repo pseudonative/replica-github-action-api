@@ -43,13 +43,15 @@ jobs:
 
     - name: Comment Terraform Plan
       run: |
-          PR_COMMENT_URL=$(jq -r .pull_request.comments_url "$GITHUB_EVENT_PATH")
-          COMMENT_BODY="#### Terraform Plan:\n\`\`\`\n${{ steps.tf_plan.outputs.plan_output }}\n\`\`\`"
+          COMMENT_URL=${{ github.event.pull_request.comments_url }}
+          if [[ -z "$COMMENT_URL" ]]; then
+            echo "Not a PR or can't fetch comment URL"
+            exit 0
+          fi
+          COMMENT_BODY="#### Terraform Plan:\n\`\`\`\n[command]/home/runner/work/_temp/9a653ec7-6d75-4029-9242-a52219aa740c/terraform-bin plan\n\`\`\`"
           curl -s -S -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
                -H "Content-Type: application/json" \
-               -X POST --data "{\"body\":\"$COMMENT_BODY\"}" $PR_COMMENT_URL
-      
-
+               -X POST --data "{\"body\":\"$COMMENT_BODY\"}" $COMMENT_URL
 
     - name: Archive Plan File
       uses: actions/upload-artifact@v2
