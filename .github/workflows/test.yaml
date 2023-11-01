@@ -2,7 +2,7 @@ name: TESTING
 
 on:
     pull_request:
-      branches: [ main, dev_* ]
+      branches: [ main ]
       types: [ opened, synchronize]
 
 jobs:
