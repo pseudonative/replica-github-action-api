@@ -17,4 +17,3 @@ resource "aws_instance" "myec2vm" {
   }
   provider = aws.us-east-1
 }
-
