@@ -25,12 +25,10 @@ jobs:
         terraform_version: 1.5.0
 
     - name: Terraform Plan for display
-      id: tf_plan
       run: |
         cd terraform/
         terraform init
-        PLAN_OUTPUT=$(terraform plan -out=plan.tfout)
-        echo "::set-output name=plan_output::$PLAN_OUTPUT"
+        terraform plan -out=plan.tfout | tee plan_output.txt
 
     - name: Comment Terraform Plan
       run: |
@@ -39,7 +37,8 @@ jobs:
             echo "Not a PR or can't fetch comment URL"
             exit 0
           fi
-          COMMENT_BODY="#### Terraform Plan:\n\`\`\`\n${{ steps.tf_plan.outputs.plan_output }}\n\`\`\`"
+          PLAN_OUTPUT=$(cat terraform/plan_output.txt)
+          COMMENT_BODY="#### Terraform Plan:\n\`\`\`\n$PLAN_OUTPUT\n\`\`\`"
           curl -s -S -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
                -H "Content-Type: application/json" \
                -X POST --data "{\"body\":\"$COMMENT_BODY\"}" $COMMENT_URL
