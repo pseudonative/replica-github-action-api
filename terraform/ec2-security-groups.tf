@@ -57,3 +57,4 @@ resource "aws_security_group" "vpc-web" {
   }
   provider = aws.us-east-1
 }
+
