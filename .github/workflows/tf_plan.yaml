@@ -28,7 +28,7 @@ jobs:
       run: |
         cd terraform/
         terraform init
-        terraform plan -out=plan.tfout | tee plan_output.txt
+        terraform plan -no-color -out=plan.tfout | tee plan_output.txt
 
     - name: Comment Terraform Plan
       run: |
