@@ -13,8 +13,6 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-        with:
-          ref: refs/pull/${{ github.event.pull_request.number }}/merge
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
