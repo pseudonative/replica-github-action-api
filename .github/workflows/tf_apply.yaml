@@ -9,13 +9,13 @@ on:
     types: [created]
  
 jobs:
-  check-comment:
-    runs-on: ubuntu-latest
-    if: github.event_name == 'issue_comment' && contains(github.event.comment.body, 'lgtm') && github.event.issue.pull_request
-    outputs:
-      approved: "true"
-    steps:
-    - run: echo "Comment approved"
+  # check-comment:
+  #   runs-on: ubuntu-latest
+  #   if: github.event_name == 'issue_comment' && contains(github.event.comment.body, 'lgtm') && github.event.issue.pull_request
+  #   outputs:
+  #     approved: "true"
+  #   steps:
+  #   - run: echo "Comment approved"
     
   terraform_apply:
     runs-on: ubuntu-latest
