@@ -31,7 +31,17 @@ jobs:
         sleep 4
         cd terraform/
         terraform init
-        terraform plan -out=plan.tfout
+        PLAN=$(terraform plan -out=plan.tfout)
+        echo "::set-output name=plan_output::$PLAN"
+
+    - name: Comment Terraform Plan
+      run: |
+        PR_COMMENT_URL=$(echo ${{ github.event.issue.comments_url }})
+        COMMENT_BODY="#### Terraform Plan:\n\`\`\`\n${{ steps.tf_plan.outputs.plan_output }}\n\`\`\`"
+        curl -s -S -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+             -H "Content-Type: application/json" \
+             -X POST --data "{\"body\":\"$COMMENT_BODY\"}" $PR_COMMENT_URL
+
 
     - name: Archive Plan File
       uses: actions/upload-artifact@v2
@@ -39,16 +49,4 @@ jobs:
         name: plan
         path: terraform/plan.tfout
     
-  inform_plan:
-    runs-on: ubuntu-latest
-    needs: [terraform]
-    permissions:
-      pull-requests: write
-    steps:
-      - uses: mshick/add-pr-comment@v2
-        with:
-          message: |
-            **Hello**
-            🌏
-            !
-    
+ 
