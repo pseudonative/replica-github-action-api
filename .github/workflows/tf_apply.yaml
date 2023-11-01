@@ -5,6 +5,8 @@ on:
     workflows: ["Terraform Plan"]
     types:
       - completed
+  push: 
+    branches: [ dev_* ]
 
 jobs:
   terraform_apply:
