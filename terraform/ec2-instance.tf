@@ -17,6 +17,3 @@ resource "aws_instance" "myec2vm" {
   }
   provider = aws.us-east-1
 }
-
-#Terrform on AWS EKS Kubernetes IaC SRE- 50 Real-World Demos
-#35.Step-03 
