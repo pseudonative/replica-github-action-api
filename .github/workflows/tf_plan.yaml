@@ -47,31 +47,31 @@ jobs:
         echo "EOF" >> $GITHUB_ENV
 
     - name: Post Plan and Apply to GitHub PR
-      if: steps.plan.outcome == 'success' && steps.apply.outcome == 'success'
+      if: steps.dev_plan.outcome == 'success'
       uses: mshick/add-pr-comment@v2
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         message: |
-          Applying **${{ inputs.TF_ENV }}**:
+          Terraform Plan **Production**:
 
           ```diff
           ${{ env.PLAN }}
           ```
 
           ```
-          ${{ steps.apply.outputs.stdout }}
+          ${{ steps.dev_plan.outputs.stdout }}
           ```
 
     - name: Post Plan Failure
-      if: steps.plan.outcome == 'failure'
+      if: steps.dev_plan.outcome == 'failure'
       uses: mshick/add-pr-comment@v2
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         message: |
-          Plan failed for **${{ inputs.TF_ENV }}**:
+          Plan failed for **Production**:
 
           ```
-          ${{ steps.plan.outputs.stderr }}
+          ${{ steps.dev_plan.outputs.stderr }}
           ```
         
     - name: Archive Plan File
