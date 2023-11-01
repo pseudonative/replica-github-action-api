@@ -64,3 +64,5 @@ jobs:
           ls | grep -Ei plan
           terraform init
           terraform apply -auto-approve plan.tfout
+
+          
