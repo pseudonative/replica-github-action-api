@@ -20,7 +20,7 @@ jobs:
   terraform_apply:
     runs-on: ubuntu-latest
     # if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    if: github.event_name == 'issue_comment' && contains(github.event.comment.body, 'lgtm') && github.event.issue.pull_request
+    if: github.event.issue.pull_request && contains(github.event.comment.body, '/lgtm')
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -64,3 +64,4 @@ jobs:
           ls | grep -Ei plan
           terraform init
           terraform apply -auto-approve plan.tfout
+
