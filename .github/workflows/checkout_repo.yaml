@@ -21,9 +21,9 @@ jobs:
           fetch-depth: 0
           ref: staging
         
-    #   - name: config aws
-    #     uses: aws-actions/configure-aws-credentials@v1
-    #     with:
-    #       aws-access-key-id: ${{ secrets.GHUB_ACTIONS_KEY_ID }}
-    #       aws-secret-access-key: ${{ secrets.GHUB_ACTIONS_ACCESS_KEY }}
-    #       aws-region: us-east-1
+      - name: config aws
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.GHUB_ACTIONS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.GHUB_ACTIONS_ACCESS_KEY }}
+          aws-region: us-east-1
