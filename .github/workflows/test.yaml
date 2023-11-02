@@ -34,5 +34,5 @@ jobs:
         run: |
           PR_EXIST=$(gh pr list --base main --head staging | wc -l)
           if [ "$PR_EXIST" -eq "0" ]; then
-            gh pr create --base main --head staging --title "Merge staging into main" --body "Automatic PR created by TESTING workflow"
+            gh pr create --base main --head staging --title "Staging Terraform Plan & Apply" --body "Automatic PR created by TESTING workflow"
           fi
