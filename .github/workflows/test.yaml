@@ -10,9 +10,11 @@ jobs:
 
     steps:     
       - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
       - name: Checkout Repository
         run: git fetch --no-tags --prune --depth=1 origin +refs/heads/*:refs/remotes/origin/*
-
+        
       - name: config aws
         uses: aws-actions/configure-aws-credentials@v1
         with:
