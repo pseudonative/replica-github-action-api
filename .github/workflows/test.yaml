@@ -9,15 +9,20 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
     steps:     
-      - uses: ./.github/workflows/aws_auth.yaml@main
-        with:
-          repository: pseudonative/replica-github-action-api
       
-      - uses: ./.github/workflows/checkout_repo.yaml@main
+      - name: Checkout Repo
+        uses: actions/checkout@v2
         with:
-          repository: pseudonative/replica-github-action-api
+          fetch-depth: 0
+          ref: staging
+        
+      - name: config aws
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.GHUB_ACTIONS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.GHUB_ACTIONS_ACCESS_KEY }}
+          aws-region: us-east-1
 
       - name: Verify S3 File
         run: |
