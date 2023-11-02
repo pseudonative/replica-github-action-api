@@ -8,9 +8,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    steps:
+    steps:     
+      - uses: actions/checkout@v2
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        run: git fetch --no-tags --prune --depth=1 origin +refs/heads/*:refs/remotes/origin/*
 
       - name: config aws
         uses: aws-actions/configure-aws-credentials@v1
