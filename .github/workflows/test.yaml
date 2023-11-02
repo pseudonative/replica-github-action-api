@@ -2,9 +2,12 @@ name: TESTING
 
 on:
     push:
-      branches: [ staging ]
+      branches: [ main, staging ]
       paths: [ terraform/** ]
-   
+    pull_request:
+      branches: [ main, staging ]
+      paths: [ terraform/** ]
+      
 jobs:
   test:
     runs-on: ubuntu-latest
