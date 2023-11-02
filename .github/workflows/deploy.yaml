@@ -12,8 +12,12 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     timeout-minutes: 15
     steps:
-    - name: Repo Checkout 
-      uses: actions/checkout@v2
+    - uses: actions/checkout@v2
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
+    - name: Checkout Repository
+      run: git fetch --no-tags --prune --depth=1 origin +refs/heads/*:refs/remotes/origin/*
+      
     - name: simulated build
       run: |
         export VERSION=$(head -n 1 ./RELEASE_NOTES.md)
@@ -76,6 +80,11 @@ jobs:
     timeout-minutes: 15
     steps:
     - uses: actions/checkout@v2
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
+    - name: Checkout Repository
+      run: git fetch --no-tags --prune --depth=1 origin +refs/heads/*:refs/remotes/origin/*
+
     - name: Download a single artifact
       uses: actions/download-artifact@v3
       with:

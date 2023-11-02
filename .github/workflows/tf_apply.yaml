@@ -9,8 +9,11 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.review.body == 'lgtm'
     steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        run: git fetch --no-tags --prune --depth=1 origin +refs/heads/*:refs/remotes/origin/*
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
