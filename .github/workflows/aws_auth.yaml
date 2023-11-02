@@ -15,11 +15,11 @@ jobs:
   setup:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-          ref: staging
+      # - name: Checkout Repo
+      #   uses: actions/checkout@v2
+      #   with:
+      #     fetch-depth: 0
+      #     ref: staging
         
       - name: config aws
         uses: aws-actions/configure-aws-credentials@v1
