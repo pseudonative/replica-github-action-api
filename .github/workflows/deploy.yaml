@@ -14,7 +14,6 @@ jobs:
     - name: Checkout Repo
       uses: actions/checkout@v2
       with:
-        fetch-depth: 0
         ref: staging
       
     - name: config aws
@@ -71,7 +70,6 @@ jobs:
     - name: Checkout Repo
       uses: actions/checkout@v2
       with:
-        fetch-depth: 0
         ref: staging
 
     - name: Download a single artifact
