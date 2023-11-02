@@ -2,10 +2,10 @@ name: TESTING
 
 on:
     push:
-      branches: [ main, staging ]
+      branches: [ staging ]
       paths: [ terraform/** ]
     pull_request:
-      branches: [ main, staging ]
+      branches: [ staging ]
       paths: [ terraform/** ]
       
 jobs:
