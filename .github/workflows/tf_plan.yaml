@@ -5,7 +5,7 @@ on:
       types: [created]
     
 jobs:
-  terraform:
+  terraform_plan:
     runs-on: ubuntu-latest
     if: github.event.issue.pull_request && contains(github.event.comment.body, '/dev')
     steps: 
@@ -35,7 +35,7 @@ jobs:
         terraform plan -input=false -no-color -out=plan.tfout \
         && terraform show -no-color plan.tfout
 
-    - name: Set Plan for Display
+    - name: Plan for Github Comment
       if: steps.dev_plan.outcome == 'success'
       run: |
         echo '${{ steps.dev_plan.outputs.stdout || steps.dev_plan.outputs.stderr }}' \

@@ -6,7 +6,7 @@ on:
     types: [completed]
   
 jobs:
-  deploy:
+  Simulated_Build:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     timeout-minutes: 15
@@ -24,25 +24,16 @@ jobs:
         aws-secret-access-key: ${{ secrets.GHUB_ACTIONS_ACCESS_KEY }}
         aws-region: us-east-1
 
-    - name: simulated build
+    - name: build
       run: |
         export VERSION=$(head -n 1 ./RELEASE_NOTES.md)
         cd ./cmd/api
         cp -R * ../..
         cd ../..
         zip api.zip bookings hello-world
-        echo "JEREMY"
     
     - name: cp to s3 
       run: |
-        # echo "the\$!i\$theBe\$t"
-        # export password="the\$!i\$theBe\$t|t"
-        # echo $password
-        # echo "the$!i$theBe$t-2"
-        # export password2="the$!i$theBe$t-2"
-        # echo $password2
-        echo "${{ secrets.TEST1 }}"
-        echo "${{ secrets.TEST2 }}"
         export VERSION=$(head -n 1 ./RELEASE_NOTES.md)
         touch bucket_key.md
         touch tf_key.sh
@@ -64,9 +55,8 @@ jobs:
         cat bucket_key.md
         EOF
         ./tf_key.sh
-        echo "this is the current state of bucket_key.md version"
-        cat bucket_key.md
-    - name: Archive production artifacts
+        
+    - name: Archive Bucket Key
       uses: actions/upload-artifact@v3
       with:
         name: bucket_key 
@@ -75,7 +65,7 @@ jobs:
             
   check:
     runs-on: ubuntu-latest
-    needs: [deploy]
+    needs: [Simulated_Build]
     timeout-minutes: 15
     steps:
     - name: Checkout Repo
