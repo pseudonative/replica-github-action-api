@@ -11,11 +11,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:     
-      - uses: ./.github/workflows/aws_auth.yaml@staging
+      - uses: ./.github/workflows/aws_auth.yaml@main
         with:
           repository: pseudonative/replica-github-action-api
       
-      - uses: ./.github/workflows/checkout_repo.yaml@staging
+      - uses: ./.github/workflows/checkout_repo.yaml@main
         with:
           repository: pseudonative/replica-github-action-api
 
