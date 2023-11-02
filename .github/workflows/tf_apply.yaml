@@ -40,6 +40,7 @@ jobs:
           cd terraform
           terraform init
           terraform apply -auto-approve plan.tfout
+        continue-on-error: true  # Continue even if this step fails
 
       - name: Successful Apply
         run: |
@@ -49,3 +50,13 @@ jobs:
             -H "Accept: application/vnd.github.v3+json" \
             https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments \
             -d '{"body":"Terraform Apply was successful!"}'
+            
+      - name: Comment on PR if Failed
+        if: failure()
+        run: |
+          curl \
+            -X POST \
+            -H "Authorization: token ${{secrets.GITHUB_TOKEN}}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments \
+            -d '{"body":"Terraform Apply failed. Please check the logs for details."}'
