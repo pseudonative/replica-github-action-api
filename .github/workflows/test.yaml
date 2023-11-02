@@ -3,6 +3,7 @@ name: TESTING
 on:
     push:
       branches: [ staging ]
+      paths: [ terraform/** ]
    
 jobs:
   test:
