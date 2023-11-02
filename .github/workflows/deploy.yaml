@@ -78,9 +78,11 @@ jobs:
     needs: [deploy]
     timeout-minutes: 15
     steps:
-    - uses: ./.github/workflows/checkout_repo.yaml@staging
+    - name: Checkout Repo
+      uses: actions/checkout@v2
       with:
-        repository: pseudonative/replica-github-action-api
+        fetch-depth: 0
+        ref: staging
 
     - name: Download a single artifact
       uses: actions/download-artifact@v3
