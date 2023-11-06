@@ -105,10 +105,12 @@ jobs:
         pwd
         echo "checking path **************************************"
         ls -alt 
-        echo "checking ls **************************************""
-        BRANCH_NAME=$(cat BRANCH_NAME/BRANCH_NAME) >> $GITHUB_ENV
+        echo "checking ls **************************************"
         sleep 3
         echo "What is the branch output"
+        cat BRANCH_NAME/BRANCH_NAME
+        sleep 2
+        echo "BRANCH_NAME=$(cat BRANCH_NAME/BRANCH_NAME)" >> $GITHUB_ENV
         sleep 3
         echo $BRANCH_NAME
 
