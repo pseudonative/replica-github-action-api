@@ -15,13 +15,6 @@ jobs:
         with:
           ref: staging
 
-      - name: Trigger Workflow Deploy
-        if: success()
-        uses: peter-evans/repository-dispatch@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN  }}
-          event-type: workflow-a-finished  
-        
       - name: config aws
         uses: aws-actions/configure-aws-credentials@v1
         with:
