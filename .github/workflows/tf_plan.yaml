@@ -8,17 +8,7 @@ jobs:
   terraform_plan:
     runs-on: ubuntu-latest
     if: github.event.issue.pull_request && contains(github.event.comment.body, '/dev')
-    steps: 
-    
-    # - name: Determine Branch Name
-    #   id: branch_name
-    #   run: echo "::set-output name=branch::$(echo ${{ github.ref_name }} | sed 's/refs\/heads\///')"
-      
-    # - name: Checkout Repo
-    #   uses: actions/checkout@v2
-    #   with:
-    #     ref: ${{ steps.branch_name.outputs.branch }}
-
+    steps:
     - name: Download Plan Artifact
       uses: dawidd6/action-download-artifact@v2
       with:
@@ -27,15 +17,14 @@ jobs:
         workflow_conclusion: success
         github_token: ${{secrets.GITHUB_TOKEN}}
         path: BRANCH_NAME
-
+  
     - name: Use branch name
-      run: |
-        BRANCH_NAME=$(cat BRANCH_NAME)
+      run: echo "BRANCH_NAME=$(cat BRANCH_NAME/BRANCH_NAME)" >> $GITHUB_ENV
 
     - name: Checkout Repo
       uses: actions/checkout@v2
       with:
-        ref: $BRANCH_NAME
+        ref: ${{ env.BRANCH_NAME }}
       
     - name: config aws
       uses: aws-actions/configure-aws-credentials@v1
