@@ -3,12 +3,10 @@ name: Deploy Build
 on:
   issue_comment:
     types: [created, edited]
-  # workflow_run:
-  #   workflows: ["TESTING"]
-  #   types:
-  #     - completed
-  repository_dispatch:
-    types: [workflow-a-finished]
+  workflow_run:
+    workflows: ["TESTING"]
+    types:
+      - completed
 
 jobs:
   check-comment-and-run:
