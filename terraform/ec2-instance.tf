@@ -18,7 +18,6 @@ resource "aws_instance" "myec2vm" {
   provider = aws.us-east-1
 }
 
-
 output "for_output_map1" {
   description = "For loop with map"
   value = {for instance in aws_instance.myec2vm: instance.id => instance.public_dns}
