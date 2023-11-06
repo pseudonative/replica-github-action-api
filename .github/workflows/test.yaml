@@ -8,14 +8,20 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:  
-      - name: Determine Branch Name
-        id: branch_name
-        run: echo "::set-output name=branch::$(echo ${{ github.ref }} | sed 's/refs\/heads\///')"
+      # 
+      # - name: Determine Branch Name
+      #   id: branch_name
+      #   run: echo "::set-output name=branch::$(echo ${{ github.ref }} | sed 's/refs\/heads\///')"
         
+      # - name: Checkout Repo
+      #   uses: actions/checkout@v2
+      #   with:
+      #     ref: ${{ steps.branch_name.outputs.branch }}
+      
       - name: Checkout Repo
         uses: actions/checkout@v2
         with:
-          ref: ${{ steps.branch_name.outputs.branch }}
+          ref: ${{ github.ref }}
 
       - name: config aws
         uses: aws-actions/configure-aws-credentials@v1
