@@ -5,6 +5,8 @@ on:
     workflows: ["TESTING"]
     types:
       - completed
+  push:
+    branches: [ staging-** ]
 
 jobs:
   Simulated_Build:
