@@ -103,6 +103,10 @@ jobs:
     - name: Use branch name
       run: |
         BRANCH_NAME=$(cat BRANCH_NAME)
+        sleep 3
+        echo "What is the branch out"
+        sleep 3
+        echo $BRANCH_NAME
 
     - name: Checkout Repo
       uses: actions/checkout@v2
