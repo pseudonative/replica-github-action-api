@@ -13,11 +13,19 @@ jobs:
     runs-on: ubuntu-latest
     if: >
       github.event_name == 'issue_comment' && 
-      contains(github.event.comment.body, 'trigger-deploy') && 
-      github.event.issue.pull_request
+      contains(github.event.comment.body, 'trigger-deploy')
     steps:
-      - name: Echo a message
-        run: echo "Triggered by comment on PR!"
+      - name: Check if comment is on commit
+        id: is_commit
+        run: |
+          PR_URL=$(jq -r ".issue.pull_request.url" "$GITHUB_EVENT_PATH")
+          if [[ "$PR_URL" == "null" ]]; then
+            echo "Comment is on commit"
+            echo "::set-output name=triggered::true"
+          fi
+      - name: Echo a message if triggered
+        if: steps.is_commit.outputs.triggered == 'true'
+        run: echo "Triggered by comment on commit!"
 
   Simulated_Build:
     runs-on: ubuntu-latest
