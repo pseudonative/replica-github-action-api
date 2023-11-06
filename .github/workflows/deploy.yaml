@@ -7,7 +7,7 @@ on:
 jobs:
   Simulated_Build:
     runs-on: ubuntu-latest
-    if: github.event.issue.pull_request && contains(github.event.comment.body, 'deploy')
+    if: github.event.issue.pull_request && contains(github.event.comment.body, '/deploy')
     timeout-minutes: 15
     steps:  
     - name: Download Plan Artifact
