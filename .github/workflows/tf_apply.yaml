@@ -11,7 +11,7 @@ jobs:
     steps: 
       # - name: Determine Branch Name
       #   id: branch_name
-      #   run: echo "::set-output name=branch::$(echo ${{ github.ref }} | sed 's/refs\/heads\///')"
+      #   run: echo "::set-output name=branch::$(echo ${{ github.ref_name }} | sed 's/refs\/heads\///')"
         
       # - name: Checkout Repo
       #   uses: actions/checkout@v2
@@ -21,7 +21,7 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v2
         with:
-          ref: ${{ github.ref }}
+          ref: ${{ github.ref_name }}
         
       - name: config aws
         uses: aws-actions/configure-aws-credentials@v1
