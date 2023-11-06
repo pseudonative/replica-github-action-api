@@ -33,18 +33,16 @@ jobs:
         run: |
           aws s3api head-object --bucket jeremy-code-deploy-dev-useast1 --key api/v2.0.0/api.zip
 
-      - name: Post test success comment on commit
-        if: success() # This ensures the comment is only posted if the previous steps succeeded
-        uses: actions/github-script@v5
-        with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          script: |
-            const commitSha = context.sha;
-            const message = '🎉 The tests have run successfully!';
-            github.rest.repos.createCommitComment({
-              ...context.repo,
-              commit_sha: commitSha,
-              body: message
-            });
-        
-            
+      - name: Get branch name
+        id: get-branch-name
+        run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+  
+      - name: Post comment on commit if staging branch
+        if: startsWith(env.BRANCH_NAME, 'staging-')
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          curl -s -H "Authorization: token $GITHUB_TOKEN" \
+               -H "Accept: application/vnd.github.v3+json" \
+               -d '{"body": "🎉 The tests have run successfully on staging branch!"}' \
+               "https://api.github.com/repos/${{ github.repository }}/commits/${GITHUB_SHA}/comments"
