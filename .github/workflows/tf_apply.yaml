@@ -40,7 +40,7 @@ jobs:
           cd terraform
           terraform init
           terraform apply -auto-approve plan.tfout
-        continue-on-error: true  # Continue even if this step fails
+        continue-on-error: false  # Continue even if this step fails
 
       - name: Successful Apply
         run: |
