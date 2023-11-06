@@ -9,34 +9,9 @@ on:
       - completed
 
 jobs:
-  check-comment-and-run:
-    runs-on: ubuntu-latest
-    outputs:
-      result: ${{ steps.comment-trigger.outputs.result }}
-    steps:
-      - uses: actions/checkout@v2
-      - id: comment-trigger
-        name: Check for Comment
-        run: |
-          if [[ "${{ github.event_name }}" == 'issue_comment' && startsWith(github.event.comment.body, '/trigger-test') ]]; then
-            echo "::set-output name=result::success"
-          else
-            echo "::set-output name=result::failure"
-          fi
-
-  job-conditional-on-test:
-    needs: [check-comment-and-run]
-    if: ${{ github.event_name == 'repository_dispatch' || needs.check-comment-and-run.outputs.result == 'success' }}
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Job that depends on Workflow A or a comment
-        run: echo "This job runs if Workflow A completes or the right comment is made."
-        
-
   Simulated_Build:
     runs-on: ubuntu-latest
-    needs: [job-conditional-on-test]
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     timeout-minutes: 15
     steps:   
     - name: Checkout Repo
