@@ -33,17 +33,17 @@ jobs:
         run: |
           aws s3api head-object --bucket jeremy-code-deploy-dev-useast1 --key api/v2.0.0/api.zip
 
-      - name: Post test success comment
-        if: success() 
+      - name: Post test success comment on commit
+        if: success() # This ensures the comment is only posted if the previous steps succeeded
         uses: actions/github-script@v5
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const prNumber = context.payload.pull_request ? context.payload.pull_request.number : context.issue.number;
+            const commitSha = context.sha;
             const message = '🎉 The tests have run successfully!';
-            github.rest.issues.createComment({
+            github.rest.repos.createCommitComment({
               ...context.repo,
-              issue_number: prNumber,
+              commit_sha: commitSha,
               body: message
-            }); 
+            });
         
