@@ -9,11 +9,15 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    steps:     
+    steps:  
+      - name: Determine Branch Name
+        id: branch_name
+        run: echo "::set-output name=branch::$(echo ${{ github.ref }} | sed 's/refs\/heads\///')"
+        
       - name: Checkout Repo
         uses: actions/checkout@v2
         with:
-          ref: staging-**
+          ref: ${{ steps.branch_name.outputs.branch }}
 
       - name: config aws
         uses: aws-actions/configure-aws-credentials@v1
@@ -26,13 +30,3 @@ jobs:
         run: |
           aws s3api head-object --bucket jeremy-code-deploy-dev-useast1 --key api/v2.0.0/api.zip
           
-      - name: Setup GitHub CLI
-        run: |
-          gh auth login --with-token <<< "${{ secrets.GITHUB_TOKEN }}"
-  
-      - name: Create Pull Request
-        run: |
-          PR_EXIST=$(gh pr list --base main --head staging | wc -l)
-          if [ "$PR_EXIST" -eq "0" ]; then
-            gh pr create --base main --head staging --title "Staging Terraform Plan & Apply" --body "Automatic PR created by TESTING workflow"
-          fi
