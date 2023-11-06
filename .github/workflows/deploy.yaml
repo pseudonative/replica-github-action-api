@@ -1,15 +1,13 @@
 name: Deploy Build
 
 on:
-  workflow_run:
-    workflows: ["TESTING"]
-    types:
-      - completed
+  issue_comment:
+    types: [created]
 
 jobs:
   Simulated_Build:
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: github.event.issue.pull_request && contains(github.event.comment.body, 'deploy')
     timeout-minutes: 15
     steps:  
     - name: Download Plan Artifact
