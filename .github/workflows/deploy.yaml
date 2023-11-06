@@ -102,7 +102,10 @@ jobs:
 
     - name: Use branch name
       run: |
-        BRANCH_NAME=$(cat BRANCH_NAME/branch-name)
+        pwd
+        echo "checking path **************************************"
+        ls -alt 
+        BRANCH_NAME=$(cat BRANCH_NAME/BRANCH_NAME)
         sleep 3
         echo "What is the branch out"
         sleep 3
