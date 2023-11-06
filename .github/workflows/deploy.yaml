@@ -118,7 +118,7 @@ jobs:
     - name: Checkout Repo
       uses: actions/checkout@v2
       with:
-        ref: $BRANCH_NAME
+        ref: ${{ env.BRANCH_NAME }}
 
     - name: Download a single artifact
       uses: actions/download-artifact@v3
