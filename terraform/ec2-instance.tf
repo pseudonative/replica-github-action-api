@@ -9,9 +9,9 @@ resource "aws_instance" "myec2vm" {
     aws_security_group.vpc-ssh.id,
     aws_security_group.vpc-web.id
   ]
-  count = 4
+  count = 1
   tags = {
-    "Name" = "${var.Name}_FIXED_${count.index}"
+    "Name" = "${var.Name}_flow_${count.index}"
     Service = "CICD"
     Environment = "GithubActionsWorkflow"
   }
