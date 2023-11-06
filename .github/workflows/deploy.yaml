@@ -1,14 +1,31 @@
 name: Deploy Build
 
 on:
+  issue_comment:
+    types: [created, edited]
   workflow_run:
-    workflows: [TESTING]
-    types: [completed]
-  
+    workflows: ["TESTING"]
+    types:
+      - completed
+
 jobs:
+  check_comment_and_run:
+    runs-on: ubuntu-latest
+    if: >
+      github.event_name == 'issue_comment' && 
+      contains(github.event.comment.body, 'trigger-deploy') && 
+      github.event.issue.pull_request
+    steps:
+      - name: Echo a message
+        run: echo "Triggered by comment on PR!"
+
   Simulated_Build:
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    needs: [check_comment_and_run]
+    if: >
+      (github.event.workflow_run && 
+      github.event.workflow_run.conclusion == 'success') ||
+      (needs.check_comment_and_run.outputs.triggered == 'true')
     timeout-minutes: 15
     steps:   
     - name: Checkout Repo
@@ -76,6 +93,7 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: bucket_key
+        
     - name: see if file is available 
       run: |
         ls -alt 
