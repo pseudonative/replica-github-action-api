@@ -1,10 +1,13 @@
 name: Deploy Build
 
 on:
+  issue_comment:
+    types: [created, edited]
   workflow_run:
-    workflows: [TESTING]
-    types: [completed]
-  
+    workflows: ["TESTING"]
+    types:
+      - completed
+
 jobs:
   Simulated_Build:
     runs-on: ubuntu-latest
@@ -76,6 +79,7 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: bucket_key
+        
     - name: see if file is available 
       run: |
         ls -alt 
