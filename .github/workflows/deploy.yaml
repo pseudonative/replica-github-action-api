@@ -114,7 +114,6 @@ jobs:
         sleep 3
         echo $BRANCH_NAME
 
-
     - name: Checkout Repo
       uses: actions/checkout@v2
       with:
