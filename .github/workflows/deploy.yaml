@@ -5,8 +5,6 @@ on:
     workflows: ["TESTING"]
     types:
       - completed
-  push:
-    branches: [ staging-** ]
 
 jobs:
   Simulated_Build:
@@ -24,6 +22,15 @@ jobs:
       #   with:
       #     ref: ${{ steps.branch_name.outputs.branch }}
       
+    - name: Download Plan Artifact
+      uses: dawidd6/action-download-artifact@v2
+      with:
+        workflow: test.yaml
+        name: branch-name
+        workflow_conclusion: success
+        github_token: ${{secrets.GITHUB_TOKEN}}
+        path: BRANCH_NAME
+
     - name: Checkout Repo
       uses: actions/checkout@v2
       with:
@@ -83,11 +90,24 @@ jobs:
     # - name: Determine Branch Name
     #   id: branch_name
     #   run: echo "::set-output name=branch::$(echo ${{ github.ref_name }} | sed 's/refs\/heads\///')"
-      
+  
+    - name: Download Plan Artifact
+      uses: dawidd6/action-download-artifact@v2
+      with:
+        workflow: test.yaml
+        name: branch-name
+        workflow_conclusion: success
+        github_token: ${{secrets.GITHUB_TOKEN}}
+        path: BRANCH_NAME
+
+    - name: Use branch name
+      run: |
+        BRANCH_NAME=$(cat BRANCH_NAME)
+
     - name: Checkout Repo
       uses: actions/checkout@v2
       with:
-        ref: ${{ github.ref_name }}
+        ref: $BRANCH_NAME
 
     - name: Download a single artifact
       uses: actions/download-artifact@v3

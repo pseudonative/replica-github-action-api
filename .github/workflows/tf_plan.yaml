@@ -3,8 +3,6 @@ name: Terraform Plan
 on:
     issue_comment:
       types: [created]
-    push:
-      branches: [ staging-** ]
       
 jobs:
   terraform_plan:
@@ -20,11 +18,24 @@ jobs:
     #   uses: actions/checkout@v2
     #   with:
     #     ref: ${{ steps.branch_name.outputs.branch }}
-    
+
+    - name: Download Plan Artifact
+      uses: dawidd6/action-download-artifact@v2
+      with:
+        workflow: test.yaml
+        name: branch-name
+        workflow_conclusion: success
+        github_token: ${{secrets.GITHUB_TOKEN}}
+        path: BRANCH_NAME
+
+    - name: Use branch name
+      run: |
+        BRANCH_NAME=$(cat BRANCH_NAME)
+
     - name: Checkout Repo
       uses: actions/checkout@v2
       with:
-        ref: ${{ github.ref_name }}
+        ref: $BRANCH_NAME
       
     - name: config aws
       uses: aws-actions/configure-aws-credentials@v1
