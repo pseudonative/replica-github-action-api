@@ -109,15 +109,16 @@ jobs:
         sleep 3
         echo "What is the branch output"
         cat BRANCH_NAME/BRANCH_NAME
-        sleep 2
+        sleep 3
         echo "BRANCH_NAME=$(cat BRANCH_NAME/BRANCH_NAME)" >> $GITHUB_ENV
         sleep 3
         echo $BRANCH_NAME
 
+
     - name: Checkout Repo
       uses: actions/checkout@v2
       with:
-        ref: $BRANCH_NAME
+        ref: ${{ env.BRANCH_NAME }}
 
     - name: Download a single artifact
       uses: actions/download-artifact@v3
