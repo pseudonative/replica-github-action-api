@@ -33,26 +33,17 @@ jobs:
         run: |
           aws s3api head-object --bucket jeremy-code-deploy-dev-useast1 --key api/v2.0.0/api.zip
 
-      - name: Successful Apply
-        run: |
-          curl \
-            -X POST \
-            -H "Authorization: token ${{secrets.GITHUB_TOKEN}}" \
-            -H "Accept: application/vnd.github.v3+json" \
-            https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments \
-            -d '{"body":"Workflow TESTS has successfully completed"}'
-                
-      - name: Comment on PR if Failed
-        if: failure()
-        run: |
-          curl \
-            -X POST \
-            -H "Authorization: token ${{secrets.GITHUB_TOKEN}}" \
-            -H "Accept: application/vnd.github.v3+json" \
-            https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments \
-            -d '{"body":"Workflow TESTS has failed completed"}'
-                
-                
-          
-          
-          
+      - name: Post test success comment
+        if: success() 
+        uses: actions/github-script@v5
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const prNumber = context.payload.pull_request ? context.payload.pull_request.number : context.issue.number;
+            const message = '🎉 The tests have run successfully!';
+            github.rest.issues.createComment({
+              ...context.repo,
+              issue_number: prNumber,
+              body: message
+            }); 
+        
