@@ -11,6 +11,8 @@ on:
 jobs:
   check_comment_and_run:
     runs-on: ubuntu-latest
+    outputs:
+      triggered: ${{ steps.is_commit.outputs.triggered }}
     if: >
       github.event_name == 'issue_comment' && 
       contains(github.event.comment.body, 'trigger-deploy')
@@ -20,17 +22,18 @@ jobs:
         run: |
           PR_URL=$(jq -r ".issue.pull_request.url" "$GITHUB_EVENT_PATH")
           if [[ "$PR_URL" == "null" ]]; then
-            echo "Comment is on commit"
             echo "::set-output name=triggered::true"
+          else
+            echo "::set-output name=triggered::false"
           fi
-      - name: Echo a message if triggered
-        if: steps.is_commit.outputs.triggered == 'true'
-        run: echo "Triggered by comment on commit!"
 
   Simulated_Build:
     runs-on: ubuntu-latest
     needs: [check_comment_and_run]
-    if: (github.event.workflow_run && github.event.workflow_run.conclusion == 'success') || (needs.check_comment_and_run.outputs.triggered == 'true')
+    if: >
+        (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success') ||
+        (github.event_name == 'issue_comment' && needs.check_comment_and_run.outputs.triggered == 'true')
+
     timeout-minutes: 15
     steps:   
     - name: Checkout Repo
