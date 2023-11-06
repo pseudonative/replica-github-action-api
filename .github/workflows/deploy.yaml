@@ -105,6 +105,7 @@ jobs:
         pwd
         echo "checking path **************************************"
         ls -alt 
+        echo "checking ls **************************************""
         BRANCH_NAME=$(cat BRANCH_NAME/BRANCH_NAME)
         sleep 3
         echo "What is the branch out"
