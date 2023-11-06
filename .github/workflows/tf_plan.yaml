@@ -12,7 +12,7 @@ jobs:
     - name: Checkout Repo
       uses: actions/checkout@v2
       with:
-        ref: staging
+        ref: staging-**
       
     - name: config aws
       uses: aws-actions/configure-aws-credentials@v1
