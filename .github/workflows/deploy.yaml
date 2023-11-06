@@ -106,3 +106,5 @@ jobs:
         export BUCKET_KEY=$(head -n 1 ./bucket_key.md)
         echo "${BUCKET_KEY}"
         echo "############### ${BUCKET_KEY} ######################"
+
+        
