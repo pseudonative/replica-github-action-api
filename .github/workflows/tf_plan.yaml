@@ -65,6 +65,7 @@ jobs:
       uses: mshick/add-pr-comment@v2
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
+        allow-repeats: true
         message: |
           Terraform Plan **Production**:
 
@@ -81,6 +82,7 @@ jobs:
       uses: mshick/add-pr-comment@v2
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
+        allow-repeats: true
         message: |
           Plan failed for **Production**:
 
