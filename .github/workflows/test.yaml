@@ -1,5 +1,4 @@
 name: TESTING
-name: Call Reusable Workflow
 
 on:
   push:
