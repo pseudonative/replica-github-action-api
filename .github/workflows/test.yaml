@@ -8,16 +8,18 @@ on:
       branches: [ staging-** ]
 
 jobs:
+  call-reusable: # This is a separate job to call the reusable workflow
+    uses: pseudonative/reusable_work_flows/.github/workflows/auth_checkout_initial.yaml@main
+    with:
+      ref: ${{ github.ref_name }}
+      aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      aws-region: 'us-east-1'
+
   test:
     runs-on: ubuntu-latest
+    needs: [call-reusable]
     steps:  
-      - name: call-reusable-workflow-job
-        uses: pseudonative/reusable_work_flows/.github/workflows/auth_checkout_initial.yaml@main
-        with:
-          ref: ${{ github.ref_name }}
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: 'us-east-1'
       # - name: Checkout Repo
       #   uses: actions/checkout@v2
       #   with:
