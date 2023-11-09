@@ -17,7 +17,7 @@ jobs:
         with:
           ref: ${{ github.ref_name }}
       - name: Composite Setup
-        uses: pseudonative/reusable_work_flows/.github/workflows/compositAction@main
+        uses: pseudonative/reusable_work_flows/compositAction@main
         with:
           ref: ${{ github.ref }}
           aws-region: 'us-east-1'
