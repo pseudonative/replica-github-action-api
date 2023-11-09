@@ -2,7 +2,7 @@ resource "aws_instance" "myec2vm" {
   ami           = data.aws_ami.amzlinux2.id
 #   instance_type = var.instance_type
 #   instance_type = var.instance_type_list[1]
-  instance_type = var.instance_type_map["qa"]
+  instance_type = var.instance_type_map["dev"]
   user_data     = file("${path.module}/app1-install.sh")
   key_name      = var.instance_keypair
   vpc_security_group_ids = [
@@ -11,7 +11,7 @@ resource "aws_instance" "myec2vm" {
   ]
   count = 1
   tags = {
-    "Name" = "${var.Name}_v2.1.2_${count.index}"
+    "Name" = "${var.Name}_v2.1.3_${count.index}"
     Service = "CICD"
     Environment = "GithubActionsWorkflow"
   }
