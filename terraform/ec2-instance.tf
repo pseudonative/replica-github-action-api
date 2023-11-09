@@ -37,3 +37,4 @@ output "latest_splat_instance_publicdns" {
   description = "latest splat operator"
   value = aws_instance.myec2vm[*].public_dns
 }
+
