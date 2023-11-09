@@ -8,7 +8,7 @@ on:
       branches: [ staging-** ]
 
 jobs:
-  call-reusable: # This is a separate job to call the reusable workflow
+  call-reusable:
     uses: pseudonative/reusable_work_flows/.github/workflows/auth_checkout_initial.yaml@main
     with:
       ref: ${{ github.ref_name }}
