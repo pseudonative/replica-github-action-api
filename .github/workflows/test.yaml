@@ -12,10 +12,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:  
-      - name: Checkout Repo
-        uses: actions/checkout@v2
-        with:
-          ref: ${{ github.ref_name }}
       - name: Composite Setup
         uses: pseudonative/reusable_work_flows/compositAction@main
         with:
