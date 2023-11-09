@@ -6,9 +6,8 @@ on:
     
     pull_request:
       branches: [ staging-** ]
-
+          
 jobs:
-
   test:
     runs-on: ubuntu-latest
     steps:  
@@ -17,22 +16,6 @@ jobs:
         with:
           ref: ${{ github.ref_name }}
           
-      # - name: Composite Setup
-      #   uses: pseudonative/reusable_work_flows/compositAction@main
-      #   with:
-      #     aws-access-key-id: ${{ secrets.GHUB_ACTIONS_KEY_ID }}
-      #     aws-secret-access-key: ${{ secrets.GHUB_ACTIONS_ACCESS_KEY }}
-      #     aws-region: 'us-east-1'
-
-      - name: use comp action
-        uses: pseudonative/reusable_work_flows/compositAction@main
-        with: 
-              aws-access-key-id: ${{ secrets.GHUB_ACTIONS_KEY_ID }}
-              aws-secret-access-key: ${{ secrets.GHUB_ACTIONS_ACCESS_KEY }}
-              aws-region: us-east-1
-          
-
-
       - name: Write branch name to a file
         run: echo ${{ github.ref_name }} > BRANCH_NAME
         
@@ -54,4 +37,4 @@ jobs:
           aws s3api head-object --bucket jeremy-code-deploy-dev-useast1 --key api/v2.0.0/api.zip
 
           
-  
+ 
