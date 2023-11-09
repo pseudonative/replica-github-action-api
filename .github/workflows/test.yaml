@@ -6,15 +6,22 @@ on:
     
     pull_request:
       branches: [ staging-** ]
-          
+
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:  
-      - name: Checkout Repo
-        uses: actions/checkout@v2
+      - name: call-reusable-workflow-job
+        uses: pseudonative/reusable_work_flows/.github/workflows/auth_checkout_initial.yaml@main
         with:
           ref: ${{ github.ref_name }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: 'us-east-1'
+      # - name: Checkout Repo
+      #   uses: actions/checkout@v2
+      #   with:
+      #     ref: ${{ github.ref_name }}
           
       - name: Write branch name to a file
         run: echo ${{ github.ref_name }} > BRANCH_NAME
@@ -25,12 +32,12 @@ jobs:
           name: branch-name
           path: BRANCH_NAME
 
-      - name: config aws
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.GHUB_ACTIONS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.GHUB_ACTIONS_ACCESS_KEY }}
-          aws-region: us-east-1
+      # - name: config aws
+      #   uses: aws-actions/configure-aws-credentials@v1
+      #   with:
+      #     aws-access-key-id: ${{ secrets.GHUB_ACTIONS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets.GHUB_ACTIONS_ACCESS_KEY }}
+      #     aws-region: us-east-1
 
       - name: Verify S3 File
         run: |
