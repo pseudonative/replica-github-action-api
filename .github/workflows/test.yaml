@@ -8,41 +8,50 @@ on:
       branches: [ staging-** ]
 
 jobs:
-  call-reusable-workflow:
-    uses: pseudonative/reusable_work_flows/.github/workflows/auth_checkout_initial.yaml@main
-    with:
-      awsAccessKeyId: ${{ secrets.GHUB_ACTIONS_KEY_ID }}
-      awsSecretAccessKey: ${{ secrets.GHUB_ACTIONS_ACCESS_KEY }}
-      awsRegion: 'us-east-1'
-      branchName: ${{ github.ref_name }}
 
-  # test:
-  #   runs-on: ubuntu-latest
-  #   steps:  
-  #     - name: Checkout Repo
-  #       uses: actions/checkout@v2
-  #       with:
-  #         ref: ${{ github.ref_name }}
-  
-  #     - name: Write branch name to a file
-  #       run: echo ${{ github.ref_name }} > BRANCH_NAME
+  test:
+    runs-on: ubuntu-latest
+    steps:  
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref_name }}
+          
+      # - name: Composite Setup
+      #   uses: pseudonative/reusable_work_flows/compositAction@main
+      #   with:
+      #     aws-access-key-id: ${{ secrets.GHUB_ACTIONS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets.GHUB_ACTIONS_ACCESS_KEY }}
+      #     aws-region: 'us-east-1'
+
+      - name: use comp action
+        uses: pseudonative/reusable_work_flows/compositAction@main
+        with: 
+              aws-access-key-id: ${{ secrets.GHUB_ACTIONS_KEY_ID }}
+              aws-secret-access-key: ${{ secrets.GHUB_ACTIONS_ACCESS_KEY }}
+              aws-region: us-east-1
+          
+
+
+      - name: Write branch name to a file
+        run: echo ${{ github.ref_name }} > BRANCH_NAME
         
-  #     - name: Archive branch name file
-  #       uses: actions/upload-artifact@v2
-  #       with:
-  #         name: branch-name
-  #         path: BRANCH_NAME
+      - name: Archive branch name file
+        uses: actions/upload-artifact@v2
+        with:
+          name: branch-name
+          path: BRANCH_NAME
 
-  #     - name: config aws
-  #       uses: aws-actions/configure-aws-credentials@v1
-  #       with:
-  #         aws-access-key-id: ${{ secrets.GHUB_ACTIONS_KEY_ID }}
-  #         aws-secret-access-key: ${{ secrets.GHUB_ACTIONS_ACCESS_KEY }}
-  #         aws-region: us-east-1
+      - name: config aws
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.GHUB_ACTIONS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.GHUB_ACTIONS_ACCESS_KEY }}
+          aws-region: us-east-1
 
-  #     - name: Verify S3 File
-  #       run: |
-  #         aws s3api head-object --bucket jeremy-code-deploy-dev-useast1 --key api/v2.0.0/api.zip
+      - name: Verify S3 File
+        run: |
+          aws s3api head-object --bucket jeremy-code-deploy-dev-useast1 --key api/v2.0.0/api.zip
 
           
   
