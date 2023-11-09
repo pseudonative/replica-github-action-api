@@ -27,8 +27,8 @@ jobs:
           ref: ${{ github.ref }}
           aws-region: 'us-east-1'
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-access-key-id: ${{ secrets.GHUB_ACTIONS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.GHUB_ACTIONS_ACCESS_KEY }}
       # - name: Checkout Repo
       #   uses: actions/checkout@v2
       #   with:
