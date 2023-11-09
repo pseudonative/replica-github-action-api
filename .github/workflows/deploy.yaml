@@ -41,11 +41,11 @@ jobs:
         artifact_name: branch-name
         artifact_path: BRANCH_NAME
         aws_region: us-east-1
-      env:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        
+      # secrets:
+      #   github_token: ${{ secrets.GITHUB_TOKEN }}
+      #   aws_access_key_id: ${{ secrets.GHUB_ACTIONS_KEY_ID }}
+      #   aws_secret_access_key: ${{ secrets.GHUB_ACTIONS_ACCESS_KEY }}
+
     - name: Additional Step Using Output
       run: echo "The branch name is ${{ steps.reusable_steps.outputs.branch_name }} and the artifact path is ${{ steps.reusable_steps.outputs.artifact_path }}"
    
