@@ -10,29 +10,40 @@ jobs:
     if: github.event.issue.pull_request && contains(github.event.comment.body, '/deploy')
     timeout-minutes: 15
     steps:  
-    - name: Download Plan Artifact
-      uses: dawidd6/action-download-artifact@v2
-      with:
-        workflow: test.yaml
-        name: branch-name
-        workflow_conclusion: success
-        github_token: ${{secrets.GITHUB_TOKEN}}
-        path: BRANCH_NAME
+    # - name: Download Plan Artifact
+    #   uses: dawidd6/action-download-artifact@v2
+    #   with:
+    #     workflow: test.yaml
+    #     name: branch-name
+    #     workflow_conclusion: success
+    #     github_token: ${{secrets.GITHUB_TOKEN}}
+    #     path: BRANCH_NAME
 
-    - name: Use branch name
-      run: echo "BRANCH_NAME=$(cat BRANCH_NAME/BRANCH_NAME)" >> $GITHUB_ENV
+    # - name: Use branch name
+    #   run: echo "BRANCH_NAME=$(cat BRANCH_NAME/BRANCH_NAME)" >> $GITHUB_ENV
 
-    - name: Checkout Repo
-      uses: actions/checkout@v2
-      with:
-        ref: ${{ env.BRANCH_NAME }}
+    # - name: Checkout Repo
+    #   uses: actions/checkout@v2
+    #   with:
+    #     ref: ${{ env.BRANCH_NAME }}
       
-    - name: config aws
-      uses: aws-actions/configure-aws-credentials@v1
+    # - name: config aws
+    #   uses: aws-actions/configure-aws-credentials@v1
+    #   with:
+    #     aws-access-key-id: ${{ secrets.GHUB_ACTIONS_KEY_ID }}
+    #     aws-secret-access-key: ${{ secrets.GHUB_ACTIONS_ACCESS_KEY }}
+    #     aws-region: us-east-1
+    - name: reusable workflow
+      id: reusable_steps
+      uses: pseudonative/reusable_work_flows/compositAction@main
       with:
-        aws-access-key-id: ${{ secrets.GHUB_ACTIONS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.GHUB_ACTIONS_ACCESS_KEY }}
-        aws-region: us-east-1
+        workflow_file: test.yaml
+        artifact_name: branch-name
+        artifact_path: BRANCH_NAME
+        aws_region: us-east-1
+    - name: Additional Step Using Output
+      run: echo "The branch name is ${{ steps.reusable_steps.outputs.branch_name }} and the artifact path is ${{ steps.reusable_steps.outputs.artifact_path }}"
+   
 
     - name: build
       run: |
