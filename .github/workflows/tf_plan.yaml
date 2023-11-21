@@ -22,12 +22,12 @@ jobs:
       run: echo "BRANCH_NAME=$(cat BRANCH_NAME/BRANCH_NAME)" >> $GITHUB_ENV
 
     - name: Checkout Repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       with:
         ref: ${{ env.BRANCH_NAME }}
       
     - name: config aws
-      uses: aws-actions/configure-aws-credentials@v1
+      uses: aws-actions/configure-aws-credentials@v4
       with:
         aws-access-key-id: ${{ secrets.GHUB_ACTIONS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.GHUB_ACTIONS_ACCESS_KEY }}
