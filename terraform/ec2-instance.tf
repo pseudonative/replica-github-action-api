@@ -9,7 +9,7 @@ resource "aws_instance" "myec2vm" {
     aws_security_group.vpc-ssh.id,
     aws_security_group.vpc-web.id
   ]
-  count = 1
+  count = 2
   tags = {
     "Name" = "${var.Name}_v2.2.2_${count.index}"
     Service = "reusableWorkflow"
