@@ -91,7 +91,7 @@ jobs:
           ```
         
     - name: Archive Plan File
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: plan
         path: terraform/plan.tfout
